@@ -41,13 +41,14 @@ public class Start extends Application {
 	private static Stage[] allWindows = { 
 		LoginWindow.INSTANCE,
 		AllMembersWindow.INSTANCE,	
-		AllBooksWindow.INSTANCE
+		AllBooksWindow.INSTANCE,
+		Dashboard.INSTANCE
 	};
 	
 	public static void hideAllWindows() {
 		primStage.hide();
 		for(Stage st: allWindows) {
-			st.hide();
+			st.close();
 		}
 	}
 	

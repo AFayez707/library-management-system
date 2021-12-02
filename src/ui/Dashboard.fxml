@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="mainAnchor" prefHeight="399.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Dashboard">
+   <children>
+      <TabPane fx:id="tabPane" layoutX="-1.0" layoutY="46.0" prefHeight="362.0" prefWidth="654.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="memberTab" text="Member">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="333.0" prefWidth="657.0" />
+            </content>
+          </Tab>
+
+          <Tab fx:id="bookTab" text="Book">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab fx:id="checkoutTab" text="Checkout">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="380.0" prefWidth="608.0" />
+                </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Label fx:id="lblGreet" layoutX="382.0" layoutY="14.0" prefWidth="158.0" text="Sample Welcome" />
+      <Button fx:id="signOut" layoutX="588.0" layoutY="10.0" mnemonicParsing="false" text="Sign out" />
+   </children>
+</AnchorPane>
