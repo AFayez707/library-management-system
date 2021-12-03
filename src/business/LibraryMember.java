@@ -46,6 +46,15 @@ final public class LibraryMember extends Person implements Serializable {
 				.toInstant());
 	}
 
+
+	public boolean hasActiveCheckout(){
+		for (CheckoutRecord record: checkoutRecords) {
+			if(record.getDueDate().getTime() > System.currentTimeMillis()){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	
 	@Override
