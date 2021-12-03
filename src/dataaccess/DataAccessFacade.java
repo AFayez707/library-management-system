@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 
+import business.Author;
 import business.Book;
 import business.BookCopy;
 import business.LibraryMember;
@@ -18,7 +19,7 @@ import dataaccess.DataAccessFacade.StorageType;
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS;
+		BOOKS, MEMBERS, USERS, AUTHORS;
 	}
 	
 	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
@@ -31,6 +32,13 @@ public class DataAccessFacade implements DataAccess {
 		String memberId = member.getMemberId();
 		mems.put(memberId, member);
 		saveToStorage(StorageType.MEMBERS, mems);	
+	}
+
+	public void saveNewAuthor(Author author) {
+		HashMap<String, Author> authors = readAuthorMap();
+		String memberId = author.getAuthorId();
+		authors.put(memberId, author);
+		saveToStorage(StorageType.AUTHORS, authors);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -46,6 +54,13 @@ public class DataAccessFacade implements DataAccess {
 		//   memberId -> LibraryMember
 		return (HashMap<String, LibraryMember>) readFromStorage(
 				StorageType.MEMBERS);
+	}
+
+	public HashMap<String, Author> readAuthorMap() {
+		//Returns a Map with name/value pairs being
+		//   memberId -> LibraryMember
+		return (HashMap<String, Author>) readFromStorage(
+				StorageType.AUTHORS);
 	}
 	
 	
@@ -70,6 +85,12 @@ public class DataAccessFacade implements DataAccess {
 		HashMap<String, User> users = new HashMap<String, User>();
 		userList.forEach(user -> users.put(user.getId(), user));
 		saveToStorage(StorageType.USERS, users);
+	}
+
+	static void loadAuthorMap(List<Author> authorList) {
+		HashMap<String, Author> authors = new HashMap<String, Author>();
+		authorList.forEach(user -> authors.put(user.getAuthorId(), user));
+		saveToStorage(StorageType.AUTHORS, authors);
 	}
  
 	static void loadMemberMap(List<LibraryMember> memberList) {
