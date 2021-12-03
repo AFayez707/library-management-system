@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="316.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.NewMemberEntry">
+   <children>
+      <TextField fx:id="txtFirstName" layoutX="108.0" layoutY="22.0" prefHeight="25.0" prefWidth="178.0" />
+      <Label layoutX="27.0" layoutY="26.0" text="First Name" />
+      <Label layoutX="28.0" layoutY="69.0" text="Last Name" />
+      <Label layoutX="28.0" layoutY="106.0" text="Street" />
+      <Label layoutX="276.0" layoutY="106.0" text="City" />
+      
+      <Label layoutX="31.0" layoutY="146.0" text="State" />
+      <Label layoutX="278.0" layoutY="146.0" text="Zip" />
+      <TextField fx:id="txtLastName" layoutX="108.0" layoutY="65.0" prefHeight="25.0" prefWidth="178.0" />
+      <TextField fx:id="txtStreet" layoutX="108.0" layoutY="102.0" prefHeight="25.0" prefWidth="158.0" />
+      <TextField fx:id="txtCity" layoutX="321.0" layoutY="102.0" prefHeight="25.0" prefWidth="125.0" />
+      <TextField fx:id="txtState" layoutX="108.0" layoutY="142.0" prefHeight="25.0" prefWidth="158.0" />
+      <TextField fx:id="txtZip" layoutX="321.0" layoutY="142.0" prefHeight="25.0" prefWidth="125.0" />
+      <TextField fx:id="txtPhone" layoutX="108.0" layoutY="182.0" prefHeight="25.0" prefWidth="158.0" />
+      <Button fx:id="btnSave" layoutX="326.0" layoutY="248.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Save" />
+      <Button fx:id="btnCancel" layoutX="389.0" layoutY="248.0" mnemonicParsing="false" text="Cancel" />
+      <Label fx:id="lblError" layoutX="30.0" layoutY="231.0" prefHeight="17.0" prefWidth="204.0" textFill="#ff0808" />
+      <Label layoutX="31.0" layoutY="186.0" prefHeight="17.0" prefWidth="43.0" text="Phone" />
+
+
+   </children>
+</AnchorPane>

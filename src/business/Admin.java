@@ -1,5 +1,7 @@
 package business;
 
+import dataaccess.Auth;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,7 +10,7 @@ public class Admin extends StaffRole {
 	
 	public Admin(String f, String l, String t, Address a) {
 		super(f, l, t, a);
-		super.setRoleName(StaffRoleEnum.LIBRARIAN.toString());
+		super.setRoleName(Auth.ADMIN.toString());
 	}
 	
 @Override
