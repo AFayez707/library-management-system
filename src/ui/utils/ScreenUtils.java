@@ -26,11 +26,11 @@ public class ScreenUtils {
             }
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
+            stage.setResizable(false);
+            stage.sizeToScene();
             stage.show();
-//            setStageIcon(stage);
         } catch (IOException ex) {
             ex.printStackTrace();
-//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return controller;
     }

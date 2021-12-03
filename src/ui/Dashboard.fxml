@@ -9,7 +9,7 @@
         <tabs>
           <Tab fx:id="memberTab" text="Member">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="333.0" prefWidth="657.0" />
+                <fx:include source="MemberArea.fxml"/>
             </content>
           </Tab>
 

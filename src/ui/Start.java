@@ -5,6 +5,7 @@ import java.util.List;
 
 import business.ControllerInterface;
 import business.SystemController;
+import dataaccess.Auth;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import ui.utils.ScreenUtils;
 
 
 public class Start extends Application {
@@ -48,7 +50,7 @@ public class Start extends Application {
 	public static void hideAllWindows() {
 		primStage.hide();
 		for(Stage st: allWindows) {
-			st.close();
+			st.hide();
 		}
 	}
 	

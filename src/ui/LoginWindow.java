@@ -91,6 +91,7 @@ public class LoginWindow extends Stage implements LibWindow {
         loginBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+
                 ControllerInterface c = new SystemController();
                 try {
 
@@ -100,8 +101,8 @@ public class LoginWindow extends Stage implements LibWindow {
                 } catch (LoginException ex) {
                     ex.printStackTrace();
                 }
-//        			messageBar.setFill(Start.Colors.green);
-//             	    messageBar.setText("Login successful");
+        			messageBar.setFill(Start.Colors.green);
+             	    messageBar.setText("Login successful");
 
 
 
