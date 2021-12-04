@@ -33,7 +33,7 @@ public class Dashboard extends Stage implements Initializable, EventHandler<Even
     Button signOut;
 
     @FXML
-    Tab memberTab, bookTab, checkoutTab;
+    Tab memberTab, bookTab, checkoutTab,bookCopyTab;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showHideTab();
@@ -55,6 +55,7 @@ public class Dashboard extends Stage implements Initializable, EventHandler<Even
             case LIBRARIAN:{
                 tabPane.getTabs().remove(memberTab);
                 tabPane.getTabs().remove(bookTab);
+                tabPane.getTabs().remove(bookCopyTab);
             }
         }
 

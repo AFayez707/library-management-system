@@ -73,12 +73,25 @@ public class MemberController extends Stage implements Initializable, EventHandl
         mi1.setOnAction((ActionEvent event) -> {
             System.out.println("Menu item 1");
             MemberData item =   (MemberData) table.getSelectionModel().getSelectedItem();
+            
+            deleteMember(item.getMemberId());
             System.out.println(item.getMemberId());
         });
         ContextMenu menu = new ContextMenu();
         menu.getItems().add(mi1);
         table.setContextMenu(menu);
     }
+
+    private void deleteMember(String memberId) {
+        LibraryMember member = da.readMemberById(memberId);
+        if(!member.hasActiveCheckout()){
+            da.deleteMember(memberId);
+            refreshTable();
+        }else{
+          ScreenUtils.showAlert("Member has active checkout association. Cannot delete!", Alert.AlertType.ERROR);
+        }
+    }
+
 
     private void initTable() {
         HashMap<String, LibraryMember> members = da.readMemberMap();
@@ -103,7 +116,7 @@ public class MemberController extends Stage implements Initializable, EventHandl
         sizeCol.setCellValueFactory(new PropertyValueFactory("telephone"));
         TableColumn dateCol = new TableColumn("Address");
         dateCol.setCellValueFactory(new PropertyValueFactory("address"));
-        dateCol.setPrefWidth(200);
+        dateCol.setPrefWidth(250);
         //Adding data to the table
         ObservableList<String> list = FXCollections.observableArrayList();
         table.setItems(data);
