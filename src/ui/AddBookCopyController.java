@@ -26,6 +26,9 @@ public class AddBookCopyController implements Initializable {
     private Label UI_Errors;
     @FXML
     private Button UI_AddBookCopyButton;
+
+
+
     Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
 
     @Override
@@ -33,7 +36,7 @@ public class AddBookCopyController implements Initializable {
         initializeBooks();
     }
 
-    private void initializeBooks() {
+    public  void initializeBooks() {
         UI_Books.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         UI_Books.getItems().clear();
         UI_Books.getItems().addAll(db.readBooksMap().values());
