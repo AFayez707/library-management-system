@@ -143,6 +143,10 @@ public class Start extends Application {
 		primaryStage.setScene(scene);
 		scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
 		primaryStage.show();
+
+		SystemController.userId = "103";
+		SystemController.currentAuth = Auth.BOTH;
+		ScreenUtils.loadWindow(getClass().getResource("Dashboard.fxml"), "Dashboard", null);
 	}
 
 }

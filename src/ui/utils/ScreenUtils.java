@@ -3,6 +3,9 @@ package ui.utils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -40,5 +43,15 @@ public class ScreenUtils {
         stage.close();
         Start.hideAllWindows();
         Start.primStage().show();
+    }
+
+    public static void showAlert(String s, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        //Setting the title
+        alert.setTitle("Alert");
+//        ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+        alert.setContentText(s);
+//        alert.getDialogPane().getButtonTypes().add(type);
+        alert.showAndWait();
     }
 }

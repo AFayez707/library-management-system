@@ -10,9 +10,7 @@ import java.util.*;
 
 import business.Author;
 import business.Book;
-import business.BookCopy;
 import business.LibraryMember;
-import dataaccess.DataAccessFacade.StorageType;
 
 
 public class DataAccessFacade implements DataAccess {
@@ -31,6 +29,17 @@ public class DataAccessFacade implements DataAccess {
 		String memberId = member.getMemberId();
 		mems.put(memberId, member);
 		saveToStorage(StorageType.MEMBERS, mems);	
+	}
+
+	public void updateMember(LibraryMember member) {
+		deleteMember(member.getMemberId());
+		saveNewMember(member);
+	}
+
+	public void deleteMember(String memberId){
+		HashMap<String, LibraryMember> allmembers =  readMemberMap();
+		allmembers.remove(memberId);
+		saveToStorage(StorageType.MEMBERS, allmembers);
 	}
 
 	public void saveNewAuthor(Author author) {
@@ -60,13 +69,18 @@ public class DataAccessFacade implements DataAccess {
 				StorageType.MEMBERS);
 	}
 
+	public LibraryMember readMemberById(String memberId) {
+		HashMap<String, LibraryMember> memberList =  (HashMap<String, LibraryMember>) readFromStorage(StorageType.MEMBERS);
+		LibraryMember libMember = memberList.get(memberId);
+		return libMember;
+	}
+
 	public HashMap<String, Author> readAuthorMap() {
 		//Returns a Map with name/value pairs being
 		//   memberId -> LibraryMember
 		return (HashMap<String, Author>) readFromStorage(
 				StorageType.AUTHORS);
 	}
-	
 	
 	@SuppressWarnings("unchecked")
 	public HashMap<String, User> readUserMap() {

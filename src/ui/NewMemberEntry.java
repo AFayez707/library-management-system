@@ -24,6 +24,8 @@ import java.util.ResourceBundle;
 public class NewMemberEntry extends Stage implements Initializable, EventHandler<Event> {
     public static final NewMemberEntry INSTANCE = new NewMemberEntry();
 
+    public static boolean isUpdateRequest = false;
+
     DataAccess da;
     @FXML
     TextField txtFirstName, txtLastName, txtStreet, txtCity, txtZip, txtState,txtPhone;
@@ -36,6 +38,9 @@ public class NewMemberEntry extends Stage implements Initializable, EventHandler
 
     MemberController memberController;
 
+
+    private LibraryMember libraryMember;
+
     public NewMemberEntry() {
         da = DataAccessProvider.getInstance();
     }
@@ -46,6 +51,16 @@ public class NewMemberEntry extends Stage implements Initializable, EventHandler
         btnSave.setOnAction(this::handle);
         btnCancel.setOnAction(this::handle);
 
+    }
+
+    private void populateUpdateRecord() {
+        this.txtFirstName.setText(libraryMember.getFirstName());
+        this.txtLastName.setText(libraryMember.getLastName());
+        this.txtPhone.setText(libraryMember.getTelephone());
+        this.txtZip.setText(libraryMember.getAddress().getZip());
+        this.txtStreet.setText(libraryMember.getAddress().getStreet());
+        this.txtState.setText(libraryMember.getAddress().getState());
+        this.txtCity.setText(libraryMember.getAddress().getCity());
     }
 
     @Override
@@ -66,19 +81,35 @@ public class NewMemberEntry extends Stage implements Initializable, EventHandler
     }
 
     private void saveMember() {
-        String newMemberIdt = getNewMemberId();
-        if(validateForm()){
-            String newMemberId = getNewMemberId();
-            LibraryMember libraryMember = new LibraryMember(newMemberId,
+        if(!validateForm())
+            return;
+
+        if(this.libraryMember !=null &&  !this.libraryMember.getMemberId().trim().isEmpty()){
+            loadData(this.libraryMember);
+            da.updateMember(libraryMember);
+        }else{
+            String newMemberIdt = getNewMemberId();
+            LibraryMember libraryMember = new LibraryMember(newMemberIdt,
                     this.txtFirstName.getText(),
                     this.txtLastName.getText().toString(),
                     this.txtPhone.getText().toString(),
                     new Address(this.txtStreet.getText(),txtCity.getText().toString(),txtState.getText().toString(),txtZip.getText().toString())
-                    );
+            );
             da.saveNewMember(libraryMember);
-            memberController.refreshTable();
-            closeWindow();
         }
+
+        memberController.refreshTable();
+        closeWindow();
+
+    }
+
+    private LibraryMember loadData(LibraryMember libraryMember) {
+        libraryMember.setFirstName(this.txtFirstName.getText());
+        libraryMember.setLastName(this.txtLastName.getText());
+        libraryMember.setTelephone(this.txtPhone.getText());
+        Address address = new Address(this.txtStreet.getText(),txtCity.getText().toString(),txtState.getText().toString(),txtZip.getText().toString());
+        libraryMember.setAddress(address);
+        return libraryMember;
 
     }
 
@@ -144,5 +175,13 @@ public class NewMemberEntry extends Stage implements Initializable, EventHandler
 
     public void setMemberController(MemberController memberController) {
         this.memberController = memberController;
+    }
+
+    public void updateRequestDetails(LibraryMember libraryMember) {
+        if(libraryMember!=null){
+        this.libraryMember = libraryMember;
+            populateUpdateRecord();
+        }
+
     }
 }

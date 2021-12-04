@@ -9,6 +9,7 @@ import dataaccess.DataAccessProvider;
 import dataaccess.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -61,7 +62,36 @@ public class MemberController extends Stage implements Initializable, EventHandl
         mainPane.setMaxHeight(mainPane.getHeight());
         mainPane.setMaxWidth(mainPane.getWidth());
 
+
+
+
+
     }
+
+    private void initMenuItems(TableView<MemberData> table) {
+        MenuItem mi1 = new MenuItem("Delete");
+        mi1.setOnAction((ActionEvent event) -> {
+            System.out.println("Menu item 1");
+            MemberData item =   (MemberData) table.getSelectionModel().getSelectedItem();
+            
+            deleteMember(item.getMemberId());
+            System.out.println(item.getMemberId());
+        });
+        ContextMenu menu = new ContextMenu();
+        menu.getItems().add(mi1);
+        table.setContextMenu(menu);
+    }
+
+    private void deleteMember(String memberId) {
+        LibraryMember member = da.readMemberById(memberId);
+        if(!member.hasActiveCheckout()){
+            da.deleteMember(memberId);
+            refreshTable();
+        }else{
+          ScreenUtils.showAlert("Member has active checkout association. Cannot delete!", Alert.AlertType.ERROR);
+        }
+    }
+
 
     private void initTable() {
         HashMap<String, LibraryMember> members = da.readMemberMap();
@@ -86,7 +116,7 @@ public class MemberController extends Stage implements Initializable, EventHandl
         sizeCol.setCellValueFactory(new PropertyValueFactory("telephone"));
         TableColumn dateCol = new TableColumn("Address");
         dateCol.setCellValueFactory(new PropertyValueFactory("address"));
-        dateCol.setPrefWidth(200);
+        dateCol.setPrefWidth(250);
         //Adding data to the table
         ObservableList<String> list = FXCollections.observableArrayList();
         table.setItems(data);
@@ -101,6 +131,19 @@ public class MemberController extends Stage implements Initializable, EventHandl
 
 //        Scene scene = new Scene(vbox, 595, 230);
         mainPane.getChildren().add(vbox);
+
+        initMenuItems(table);
+
+        table.setRowFactory( tv -> {
+            TableRow<MemberData> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    MemberData rowData = row.getItem();
+                    intentNewMemberScreen(true,rowData.getMemberId());
+                }
+            });
+            return row ;
+        });
     }
 
     @Override
@@ -109,11 +152,16 @@ public class MemberController extends Stage implements Initializable, EventHandl
         if(ctrl.equals(btnAddMember.getId())){
             // Open Create Member
 //            ScreenUtils.loadWindow(getClass().getResource("NewMemberEntry.fxml"), "NewMember", null);
-            intentNewMemberScreen();
+            intentNewMemberScreen(false, null);
         }
     }
 
-    private void intentNewMemberScreen() {
+    private void intentNewMemberScreen(boolean isUpdateRequest, String memberId) {
+
+        if(isUpdateRequest && (memberId==null ||memberId.isEmpty())){
+            throw new IllegalArgumentException("Need memberId in order to update");
+        }
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("NewMemberEntry.fxml"));
             Parent root = loader.load();
@@ -121,10 +169,17 @@ public class MemberController extends Stage implements Initializable, EventHandl
             NewMemberEntry newMemberEntry = loader.getController();
             newMemberEntry.setMemberController(this);
 
+
             Stage stage =new Stage(StageStyle.DECORATED);
             stage.setTitle("Add Library Member");
             stage.setScene(new Scene(root));
             stage.show();
+
+            if(isUpdateRequest){
+                LibraryMember libraryMember =  da.readMemberById(memberId);
+                newMemberEntry.updateRequestDetails(libraryMember);
+//                newMemberEntry.update(String )
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -134,6 +189,8 @@ public class MemberController extends Stage implements Initializable, EventHandl
     public void refreshTable(){
         this.initTable();
     }
+
+
 
 
 }
