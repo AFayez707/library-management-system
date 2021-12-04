@@ -71,7 +71,7 @@ public class TestData {
 	List<LibraryMember> members = new ArrayList<LibraryMember>();
 	@SuppressWarnings("serial")
 	
-	List<Address> addresses = new ArrayList<Address>() {
+	static List<Address> addresses = new ArrayList<Address>() {
 		{
 			add(new Address("101 S. Main", "Fairfield", "IA", "52556"));
 			add(new Address("51 S. George", "Georgetown", "MI", "65434"));
@@ -84,7 +84,7 @@ public class TestData {
 		}
 	};
 	@SuppressWarnings("serial")
-	public List<Author> allAuthors = new ArrayList<Author>() {
+	public static List<Author> allAuthors = new ArrayList<Author>() {
 		{
 			add(new Author("10005","Joe", "Thomas", "641-445-2123", addresses.get(0), "A happy man is he."));
 			add(new Author("10006","Sandra", "Thomas", "641-445-2123", addresses.get(0), "A happy wife is she."));
@@ -95,7 +95,7 @@ public class TestData {
 	};
 	
 	@SuppressWarnings("serial")
-	List<Book> allBooks = new ArrayList<Book>() {
+	public static List<Book> allBooks = new ArrayList<Book>() {
 		{
 			add(new Book("23-11451", "The Big Fish", 21, Arrays.asList(allAuthors.get(0), allAuthors.get(1))));
 			add(new Book("28-12331", "Antartica", 7, Arrays.asList(allAuthors.get(2))));
@@ -103,6 +103,27 @@ public class TestData {
 			add(new Book("48-56882", "Jimmy's First Day of School", 7, Arrays.asList(allAuthors.get(4))));		
 		}
 	};
+
+//	private static boolean checkIfBookIsAlreadyExist(String ISBN) {
+//		for(Book book : allBooks) {
+//			if(book.getIsbn().equals(ISBN)) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+
+//	public static String addBook(String title, String ISBN, int maxCheckoutLength, ArrayList<Author> authors) {
+//		boolean alreadyExists = checkIfBookIsAlreadyExist(ISBN);
+//		String errorMessage = null;
+//
+//		if(!alreadyExists) {
+//			allBooks.add(new Book(ISBN, title, maxCheckoutLength, authors));
+//		} else {
+//			errorMessage = new String("Book already exists!");
+//		}
+//		return errorMessage;
+//	}
 	
 	@SuppressWarnings("serial")
 	List<User> allUsers = new ArrayList<User>() {

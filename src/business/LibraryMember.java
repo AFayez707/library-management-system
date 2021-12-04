@@ -2,10 +2,9 @@ package business;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
-
-import dataaccess.DataAccess;
-import dataaccess.DataAccessFacade;
 
 final public class LibraryMember extends Person implements Serializable {
 	private String memberId;
@@ -30,9 +29,32 @@ final public class LibraryMember extends Person implements Serializable {
 	public String getMemberId() {
 		return memberId;
 	}
-	
-	
 
+	public void checkout(Book book) {
+		BookCopy copy = book.getNextAvailableCopy();
+		copy.changeAvailability();
+		CheckoutRecord record = new CheckoutRecord(this,
+				copy,
+				new Date(System.currentTimeMillis()),
+				convertLocalDateToDate(LocalDate.now().plusDays(book.getMaxCheckoutLength())));
+		checkoutRecords.add(record);
+	}
+
+	public Date convertLocalDateToDate(LocalDate dateToConvert) {
+		return Date.from(dateToConvert.atStartOfDay()
+				.atZone(ZoneId.systemDefault())
+				.toInstant());
+	}
+
+
+	public boolean hasActiveCheckout(){
+		for (CheckoutRecord record: checkoutRecords) {
+			if(record.getDueDate().getTime() > System.currentTimeMillis()){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	
 	@Override
