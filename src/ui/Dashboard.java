@@ -6,9 +6,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import ui.utils.ScreenUtils;
 
@@ -33,13 +33,34 @@ public class Dashboard extends Stage implements Initializable, EventHandler<Even
     Button signOut;
 
     @FXML
+    AnchorPane bookCopyTabAnchor;
+
+    @FXML
     Tab memberTab, bookTab, checkoutTab,bookCopyTab;
+
+    private AddBookCopyController bookCopyController;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showHideTab();
         lblGreet.setText("Welcome "+SystemController.userId);
         signOut.setOnAction(this::handle);
+        loadBookCopy();
+        bookTab.setOnSelectionChanged (e ->
+                loadBookCopy()
+        );
+    }
 
+    private void loadBookCopy() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/AddBookCopyView.fxml"));
+        try {
+            Parent root = loader.load();
+            bookCopyController = loader.getController();
+            bookCopyTab.setContent(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

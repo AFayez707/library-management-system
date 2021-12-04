@@ -22,7 +22,9 @@
           </Tab>
             <Tab fx:id="bookCopyTab" text="Book Copy">
                 <content>
-                    <fx:include source="AddBookCopyView.fxml" />
+
+<!--                    <AnchorPane fx:id="bookCopyTabAnchor"></AnchorPane>-->
+<!--                    <fx:include fx:id="bookCopyController" source="AddBookCopyView.fxml" />-->
                 </content>
             </Tab>
 
