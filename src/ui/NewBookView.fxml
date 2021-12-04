@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.NewBookController">
+    <children>
+        <Text layoutX="177.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Book">
+            <font>
+                <Font name="System Bold" size="34.0" />
+            </font></Text>
+        <GridPane fx:id="UI_Grid" gridLinesVisible="true" layoutX="41.0" layoutY="81.0" prefHeight="312.0" prefWidth="516.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.5" minWidth="10.0" prefWidth="208.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="372.0" minWidth="10.0" prefWidth="308.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label prefHeight="218.0" prefWidth="200.0" text="Book Title" />
+                <Label text="ISBN" GridPane.rowIndex="1" />
+                <Label text="Max Checkout Length" GridPane.rowIndex="2" />
+                <Label text="Authors" GridPane.rowIndex="3" />
+                <TextField fx:id="UI_BookTitle" GridPane.columnIndex="1" />
+                <TextField fx:id="UI_ISBN" prefHeight="0.0" prefWidth="308.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <ComboBox fx:id="UI_MaxCheckoutLength" prefHeight="45.0" prefWidth="340.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <ListView fx:id="UI_Authors" prefHeight="400.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            </children>
+        </GridPane>
+        <Button fx:id="UI_AddBookButton" layoutX="237.0" layoutY="419.0" mnemonicParsing="false" onAction="#addNewBook" text="Add Book" />
+        <Label fx:id="UI_Errors" layoutX="17.0" layoutY="471.0" prefHeight="119.0" prefWidth="562.0" textFill="RED" />
+    </children>
+</AnchorPane>

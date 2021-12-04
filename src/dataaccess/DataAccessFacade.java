@@ -6,8 +6,7 @@ import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import business.Author;
 import business.Book;
@@ -42,10 +41,15 @@ public class DataAccessFacade implements DataAccess {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public  HashMap<String,Book> readBooksMap() {
+	public HashMap<String,Book> readBooksMap() {
 		//Returns a Map with name/value pairs being
 		//   isbn -> Book
 		return (HashMap<String,Book>) readFromStorage(StorageType.BOOKS);
+	}
+
+	public void saveBooksMap(HashMap<String,Book> booksHashMap) {
+		ArrayList<Book> bookList = new ArrayList<>(booksHashMap.values());
+		loadBookMap(bookList);
 	}
 	
 	@SuppressWarnings("unchecked")
