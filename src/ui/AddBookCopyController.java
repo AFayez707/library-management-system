@@ -45,9 +45,11 @@ public class AddBookCopyController implements Initializable {
     public void addNewBookCopies() {
         if(validateForm()) {
             UI_Errors.setText("");
+            HashMap<String, Book> newDB = db.readBooksMap();
             Book book = (Book)UI_Books.getSelectionModel().getSelectedItem();
             book.addCopies(Integer.parseInt(UI_NumOfCopies.getText()));
-            db.saveBooksMap(db.readBooksMap());
+            newDB.put(book.getIsbn(), book);
+            db.saveBooksMap(newDB);
 
             successAlert.setTitle("Success!");
             successAlert.setContentText("Copies has been added successfully! Current book copies is: " + book.getNumCopies());
