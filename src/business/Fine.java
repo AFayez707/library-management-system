@@ -1,6 +1,8 @@
 package business;
 
-public class Fine {
+import java.io.Serializable;
+
+public class Fine implements Serializable {
 	private double value;
 	private boolean isPaid = false;
 	

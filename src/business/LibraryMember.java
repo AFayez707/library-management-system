@@ -3,12 +3,11 @@ package business;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 final public class LibraryMember extends Person implements Serializable {
 	private String memberId;
-	private List<CheckoutRecord> checkoutRecords;
+	private List<CheckoutRecord> checkoutRecords = new ArrayList<>();
 	
 	public List<CheckoutRecord> getCheckoutRecords() {
 		return checkoutRecords;
@@ -55,7 +54,19 @@ final public class LibraryMember extends Person implements Serializable {
 		}
 		return false;
 	}
-	
+
+	public List<CheckoutRecord> getOverdueRecords(String isbn){
+		ArrayList<CheckoutRecord> records = new ArrayList<>();
+		for (CheckoutRecord record: checkoutRecords) {
+			if(record.getBookCopy().getBook().getIsbn().equals(isbn) &&
+					record.getDueDate().getTime() < System.currentTimeMillis() &&
+					!record.getBookCopy().isAvailable()){
+				records.add(record);
+			}
+		}
+		return records;
+	}
+
 	
 	@Override
 	public String toString() {

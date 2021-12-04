@@ -15,9 +15,7 @@
 
           <Tab fx:id="bookTab" text="Book">
             <content>
-<!--              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />-->
-                <fx:include source="NewBookView.fxml" />
-
+                <fx:include source="NewBookView.fxml"/>
             </content>
           </Tab>
             <Tab fx:id="bookCopyTab" text="Book Copy">
@@ -29,6 +27,12 @@
             <Tab fx:id="checkoutTab" text="Checkout">
                 <content>
                     <fx:include source="checkout/checkout.fxml" />
+                </content>
+            </Tab>
+
+            <Tab fx:id="overdueTab" text="Overdue">
+                <content>
+                    <fx:include source="overdue/overdue.fxml" />
                 </content>
             </Tab>
         </tabs>

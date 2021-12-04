@@ -5,19 +5,15 @@ import dataaccess.DataAccess;
 import dataaccess.DataAccessProvider;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import ui.uimodels.MemberData;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -44,17 +40,20 @@ public class CheckoutController extends Stage implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        TableColumn copyNumCol = new TableColumn("CopyNumber");
+        TableColumn isbnCol = new TableColumn("ISBN");
+        isbnCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+
+        TableColumn copyNumCol = new TableColumn("CopyNum");
         copyNumCol.setCellValueFactory(new PropertyValueFactory<>("copyNum"));
         copyNumCol.setPrefWidth(100);
-        TableColumn dateCol = new TableColumn("CheckoutDate");
+        TableColumn dateCol = new TableColumn("Date");
         dateCol.setCellValueFactory(new PropertyValueFactory("date"));
         dateCol.setPrefWidth(100);
         TableColumn dueDateCol = new TableColumn("DueDate");
         dueDateCol.setPrefWidth(100);
         dueDateCol.setCellValueFactory(new PropertyValueFactory("dueDate"));
 
-        tableView.getColumns().addAll(copyNumCol, dateCol, dueDateCol);
+        tableView.getColumns().addAll(isbnCol, copyNumCol, dateCol, dueDateCol);
 
 
 
@@ -63,12 +62,15 @@ public class CheckoutController extends Stage implements Initializable {
         });
 
         newCheckoutButton.setOnAction(event -> {
-            onNewCheckoutButton();
+            onNewCheckoutClick();
         });
 
         printButton.setOnAction(event -> {
             onPrintButton();
         });
+
+        newCheckoutButton.setDisable(true);
+        printButton.setDisable(true);
     }
 
     ObservableList<CheckoutRecordData> data = FXCollections.observableArrayList();
@@ -79,23 +81,25 @@ public class CheckoutController extends Stage implements Initializable {
 
         member = members.get(memberIdET.getText());
         book = books.get(isbnET.getText());
-        tableView.setItems(data);
+        data.clear();
+        printButton.setDisable(false);
         if(member == null){
             resultTV.setText("member not found");
+            printButton.setDisable(true);
         }else if(book == null){
-            resultTV.setText("book not found");
-        } else if(!book.isAvailable()){
-            resultTV.setText("book is not available");
-        } else{
-
-            // TODO remove this block
-//            ArrayList<CheckoutRecord> list = new ArrayList<>();
-//            CheckoutRecord c = new CheckoutRecord(member, book.getCopies()[0], new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
-//            list.add(c);
-//            member.setCheckoutRecords(list);
-
             showData();
-            resultTV.setText("A copy is available");
+            resultTV.setText("book not found");
+            newCheckoutButton.setDisable(true);
+        } else if(!book.isAvailable()){
+            showData();
+            resultTV.setText("book is not available");
+            book = null;
+            newCheckoutButton.setDisable(true);
+        } else{
+            showData();
+            resultTV.setText(book.getIsbn() + " copy is available");
+            newCheckoutButton.setDisable(false);
+            printButton.setDisable(false);
         }
 
     }
@@ -104,6 +108,7 @@ public class CheckoutController extends Stage implements Initializable {
         data.clear();
         for (CheckoutRecord rec: member.getCheckoutRecords()){
                 data.add(new CheckoutRecordData(
+                        rec.getBookCopy().getBook().getIsbn(),
                         rec.getBookCopy().getCopyNum(),
                         rec.getCheckoutDate(),
                         rec.getDueDate()
@@ -115,9 +120,11 @@ public class CheckoutController extends Stage implements Initializable {
     private LibraryMember member = null;
     private Book book = null;
 
-    private void onNewCheckoutButton() {
+    private void onNewCheckoutClick() {
         if(member != null && book != null){
             member.checkout(book);
+            da.updateMember(member);
+            da.updateBook(book);
             resultTV.setText("");
             showData();
             if(book.getNextAvailableCopy() == null)
@@ -126,9 +133,16 @@ public class CheckoutController extends Stage implements Initializable {
     }
 
     private void onPrintButton() {
+        HashMap<String, LibraryMember> members = da.readMemberMap();
+        LibraryMember member = members.get(memberIdET.getText());
         if(member != null){
-            for (CheckoutRecord record: member.getCheckoutRecords()) {
-                System.out.printf("%-10s %-10s %-10s\n", record.getBookCopy().getCopyNum(), date2String(record.getCheckoutDate()), date2String(record.getDueDate()));
+            if(!member.getCheckoutRecords().isEmpty()) {
+                System.out.printf("%-10s %-10s %-10s %-10s\n", "ISBN","CopyNum", "Date", "DueDate");
+                for (CheckoutRecord record : member.getCheckoutRecords()) {
+                    System.out.printf("%-10s %-10s %-10s %-10s\n", record.getBookCopy().getBook().getIsbn(), record.getBookCopy().getCopyNum(), date2String(record.getCheckoutDate()), date2String(record.getDueDate()));
+                }
+            } else{
+                System.out.println("No records for current member id");
             }
         }
     }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import business.Author;
 import business.Book;
+import business.BookCopy;
 import business.LibraryMember;
 import dataaccess.DataAccessFacade.StorageType;
 
@@ -17,4 +18,5 @@ public interface DataAccess {
 	LibraryMember readMemberById(String memberId);
 	void updateMember(LibraryMember member);
 	void deleteMember(String memberId);
+	void updateBook(Book book);
 }

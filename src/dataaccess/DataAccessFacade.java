@@ -36,6 +36,12 @@ public class DataAccessFacade implements DataAccess {
 		saveNewMember(member);
 	}
 
+	public void updateBook(Book book) {
+		HashMap<String, Book> books =  readBooksMap();
+		books.replace(book.getIsbn(), book);
+		saveBooksMap(books);
+	}
+
 	public void deleteMember(String memberId){
 		HashMap<String, LibraryMember> allmembers =  readMemberMap();
 		allmembers.remove(memberId);

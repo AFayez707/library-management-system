@@ -7,9 +7,10 @@ import java.util.Date;
 
 public class CheckoutRecordData {
 
-    private SimpleStringProperty copyNum, date, dueDate;
+    private SimpleStringProperty isbn, copyNum, date, dueDate;
 
-    public CheckoutRecordData(int copyNum, Date date, Date dueDate) {
+    public CheckoutRecordData(String isbn, int copyNum, Date date, Date dueDate) {
+        this.isbn = new SimpleStringProperty(isbn);
         this.copyNum = new SimpleStringProperty(copyNum + "");
         this.date = new SimpleStringProperty(date2String(date));
         this.dueDate = new SimpleStringProperty(date2String(dueDate));
@@ -53,5 +54,17 @@ public class CheckoutRecordData {
 
     public void setDueDate(String dueDate) {
         this.dueDate.set(dueDate);
+    }
+
+    public String getIsbn() {
+        return isbn.get();
+    }
+
+    public SimpleStringProperty isbnProperty() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn.set(isbn);
     }
 }

@@ -2,11 +2,12 @@ package business;
 
 import dataaccess.Auth;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Admin extends StaffRole {
+public class Admin extends StaffRole implements Serializable {
 	
 	public Admin(String f, String l, String t, Address a) {
 		super(f, l, t, a);
