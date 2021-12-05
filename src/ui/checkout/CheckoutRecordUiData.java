@@ -5,12 +5,13 @@ import javafx.beans.property.SimpleStringProperty;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CheckoutRecordData {
+public class CheckoutRecordUiData {
 
-    private SimpleStringProperty isbn, copyNum, date, dueDate;
+    private SimpleStringProperty isbn, title,copyNum, date, dueDate;
 
-    public CheckoutRecordData(String isbn, int copyNum, Date date, Date dueDate) {
+    public CheckoutRecordUiData(String isbn, String title ,int copyNum, Date date, Date dueDate) {
         this.isbn = new SimpleStringProperty(isbn);
+        this.title = new SimpleStringProperty(title);
         this.copyNum = new SimpleStringProperty(copyNum + "");
         this.date = new SimpleStringProperty(date2String(date));
         this.dueDate = new SimpleStringProperty(date2String(dueDate));
@@ -66,5 +67,17 @@ public class CheckoutRecordData {
 
     public void setIsbn(String isbn) {
         this.isbn.set(isbn);
+    }
+
+    public String getTitle() {
+        return title.get();
+    }
+
+    public SimpleStringProperty titleProperty() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title.set(title);
     }
 }

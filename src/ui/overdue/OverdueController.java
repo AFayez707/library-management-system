@@ -12,9 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
-import ui.checkout.CheckoutRecordData;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -31,7 +29,7 @@ public class OverdueController extends Stage implements Initializable {
     @FXML
     public TableView tableView;
 
-    ObservableList<OverdueRecordData> data = FXCollections.observableArrayList();
+    ObservableList<OverdueRecordUiData> data = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -61,7 +59,7 @@ public class OverdueController extends Stage implements Initializable {
                 List<CheckoutRecord> overdueRecords = libraryMember.getOverdueRecords(isbnET.getText());
                 if(!overdueRecords.isEmpty()){
                     for (CheckoutRecord rec: overdueRecords){
-                        data.add(new OverdueRecordData(
+                        data.add(new OverdueRecordUiData(
                                 rec.getBookCopy().getBook().getIsbn(),
                                 rec.getBookCopy().getBook().getTitle(),
                                 rec.getBookCopy().getCopyNum(),

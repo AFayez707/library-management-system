@@ -2,10 +2,10 @@ package ui.overdue;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class OverdueRecordData {
+public class OverdueRecordUiData {
     private final SimpleStringProperty isbn, bookTitle, copyNum, memberId, dueDate;
 
-    public OverdueRecordData(String isbn, String bookTitle, int copyNum, String memberId, String dueDate) {
+    public OverdueRecordUiData(String isbn, String bookTitle, int copyNum, String memberId, String dueDate) {
 
         this.isbn = new SimpleStringProperty(isbn);
         this.bookTitle = new SimpleStringProperty(bookTitle);

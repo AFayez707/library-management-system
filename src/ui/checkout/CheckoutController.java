@@ -43,6 +43,10 @@ public class CheckoutController extends Stage implements Initializable {
         TableColumn isbnCol = new TableColumn("ISBN");
         isbnCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
 
+        TableColumn titleCol = new TableColumn("Title");
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        titleCol.setPrefWidth(120);
+
         TableColumn copyNumCol = new TableColumn("CopyNum");
         copyNumCol.setCellValueFactory(new PropertyValueFactory<>("copyNum"));
         copyNumCol.setPrefWidth(100);
@@ -53,7 +57,7 @@ public class CheckoutController extends Stage implements Initializable {
         dueDateCol.setPrefWidth(100);
         dueDateCol.setCellValueFactory(new PropertyValueFactory("dueDate"));
 
-        tableView.getColumns().addAll(isbnCol, copyNumCol, dateCol, dueDateCol);
+        tableView.getColumns().addAll(isbnCol, titleCol, copyNumCol, dateCol, dueDateCol);
 
 
 
@@ -73,7 +77,7 @@ public class CheckoutController extends Stage implements Initializable {
         printButton.setDisable(true);
     }
 
-    ObservableList<CheckoutRecordData> data = FXCollections.observableArrayList();
+    ObservableList<CheckoutRecordUiData> data = FXCollections.observableArrayList();
 
     private void checkAvailabilityClick() {
         HashMap<String, LibraryMember> members = da.readMemberMap();
@@ -107,8 +111,9 @@ public class CheckoutController extends Stage implements Initializable {
     private void showData() {
         data.clear();
         for (CheckoutRecord rec: member.getCheckoutRecords()){
-                data.add(new CheckoutRecordData(
+                data.add(new CheckoutRecordUiData(
                         rec.getBookCopy().getBook().getIsbn(),
+                        rec.getBookCopy().getBook().getTitle(),
                         rec.getBookCopy().getCopyNum(),
                         rec.getCheckoutDate(),
                         rec.getDueDate()
@@ -137,9 +142,9 @@ public class CheckoutController extends Stage implements Initializable {
         LibraryMember member = members.get(memberIdET.getText());
         if(member != null){
             if(!member.getCheckoutRecords().isEmpty()) {
-                System.out.printf("%-10s %-10s %-10s %-10s\n", "ISBN","CopyNum", "Date", "DueDate");
+                System.out.printf("%-10s %-10s %-10s %-10s\n", "ISBN", "BookTitle","CopyNum", "Date", "DueDate");
                 for (CheckoutRecord record : member.getCheckoutRecords()) {
-                    System.out.printf("%-10s %-10s %-10s %-10s\n", record.getBookCopy().getBook().getIsbn(), record.getBookCopy().getCopyNum(), date2String(record.getCheckoutDate()), date2String(record.getDueDate()));
+                    System.out.printf("%-10s %-10s %-10s %-10s\n", record.getBookCopy().getBook().getIsbn(), record.getBookCopy().getBook().getTitle(), record.getBookCopy().getCopyNum(), date2String(record.getCheckoutDate()), date2String(record.getDueDate()));
                 }
             } else{
                 System.out.println("No records for current member id");

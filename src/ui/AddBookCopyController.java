@@ -1,19 +1,14 @@
 package ui;
 
-import business.Author;
 import business.Book;
-import business.SystemController;
 import dataaccess.DataAccess;
-import dataaccess.DataAccessFacade;
 import dataaccess.DataAccessProvider;
-import dataaccess.TestData;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class AddBookCopyController implements Initializable {
