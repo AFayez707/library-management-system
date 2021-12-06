@@ -100,9 +100,9 @@ public class LoginWindow extends Stage implements LibWindow {
                     ScreenUtils.loadWindow(getClass().getResource("Dashboard.fxml"), "Dashboard", null);
                 } catch (LoginException ex) {
                     ex.printStackTrace();
+                           messageBar.setFill(Start.Colors.red);
+                    messageBar.setText("Invalid Username / password.");
                 }
-        			messageBar.setFill(Start.Colors.green);
-             	    messageBar.setText("Login successful");
 
 
 
