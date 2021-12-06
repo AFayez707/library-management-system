@@ -85,7 +85,17 @@ final public class Book implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "title: " + title + ", isbn: " + isbn + ", maxLength: " + maxCheckoutLength + ", available: " + isAvailable();
+		StringBuilder authorsString = new StringBuilder();
+		authorsString.append("[");
+		for(int i = 0; i < authors.size(); i++) {
+			authorsString.append(authors.get(i));
+			if(i < authors.size() - 1) {
+				authorsString.append(", ");
+			}
+		}
+		authorsString.append("]");
+
+		return "title: " + title + ", isbn: " + isbn + ", authors: " + authorsString + ", maxBorrowLength: " + maxCheckoutLength + ", available: " + isAvailable();
 	}
 	
 	public int getNumCopies() {

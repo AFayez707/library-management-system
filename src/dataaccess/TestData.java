@@ -116,27 +116,6 @@ public class TestData {
 			add(new Book("48-56882", "Jimmy's First Day of School", 7, Arrays.asList(allAuthors.get(4))));		
 		}
 	};
-
-//	private static boolean checkIfBookIsAlreadyExist(String ISBN) {
-//		for(Book book : allBooks) {
-//			if(book.getIsbn().equals(ISBN)) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-
-//	public static String addBook(String title, String ISBN, int maxCheckoutLength, ArrayList<Author> authors) {
-//		boolean alreadyExists = checkIfBookIsAlreadyExist(ISBN);
-//		String errorMessage = null;
-//
-//		if(!alreadyExists) {
-//			allBooks.add(new Book(ISBN, title, maxCheckoutLength, authors));
-//		} else {
-//			errorMessage = new String("Book already exists!");
-//		}
-//		return errorMessage;
-//	}
 	
 	@SuppressWarnings("serial")
 	List<User> allUsers = new ArrayList<User>() {

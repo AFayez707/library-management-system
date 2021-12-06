@@ -47,7 +47,7 @@ public class AddBookCopyController implements Initializable {
             db.saveBooksMap(newDB);
 
             successAlert.setTitle("Success!");
-            successAlert.setContentText("Copies has been added successfully! Current book copies is: " + book.getNumCopies());
+            successAlert.setContentText("Success! Current book copies are: " + book.getNumCopies());
             successAlert.show();
         }
     }

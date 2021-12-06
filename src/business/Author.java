@@ -36,7 +36,7 @@ final public class Author extends Person implements Serializable {
 
 	@Override
 	public String toString() {
-		return this.getFirstName() + " " + this.getLastName();
+		return this.getFirstName() + " " + this.getLastName() + " " + super.getAddress().toString();
 	}
 
 	private static final long serialVersionUID = 7508481940058530471L;
